@@ -91,7 +91,22 @@ nav {
   font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
   color: var(--color-text); text-decoration: none;
 }
-.nav-logo svg { color: var(--color-primary); }
+.jb-logo {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  transition: transform var(--transition);
+  position: relative;
+}
+.jb-logo::before {
+  content: ''; position: absolute; inset: -1px;
+  border-radius: 50%; border: 1px solid var(--color-primary);
+  opacity: 0.3;
+}
+.nav-logo:hover .jb-logo { transform: rotate(5deg) scale(1.05); }
 .nav-right { display: flex; align-items: center; gap: var(--space-4); }
 .nav-link { color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); transition: color var(--transition); }
 .nav-link:hover { color: var(--color-primary); }
@@ -155,9 +170,32 @@ nav {
   border: 1px solid oklch(from var(--color-text) l c h / 0.08);
   border-radius: var(--radius-xl);
   padding: var(--space-5);
-  transition: box-shadow var(--transition), transform var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition), background var(--transition), border-color var(--transition);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  position: relative;
 }
-.rec-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.rec-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  background: color-mix(in oklch, var(--color-surface) 95%, var(--color-primary) 5%);
+  border-color: color-mix(in oklch, var(--color-primary) 20%, transparent);
+}
+.rec-card::after {
+  content: '♪';
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.rec-card:hover::after {
+  opacity: 1;
+}
 
 .rec-artist {
   font-family: var(--font-display); font-size: var(--text-lg);
@@ -241,6 +279,10 @@ footer {
   font-size: var(--text-xs);
   color: var(--color-text-faint);
 }
+.secrets-counter {
+  margin-top: var(--space-2); color: var(--color-text-faint);
+  font-size: var(--text-xs);
+}
 
 @media (max-width: 640px) {
   nav { padding: var(--space-3) var(--space-4); }
@@ -254,11 +296,8 @@ footer {
 <!-- NAV -->
 <nav aria-label="Site navigation">
   <a href="index.html" class="nav-logo" aria-label="Chicago Concert Guide 2026">
-    <!-- Music note SVG logo -->
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      <circle cx="14" cy="14" r="14" fill="currentColor" opacity="0.15"/>
-      <path d="M18 8v9.5a2.5 2.5 0 1 1-2-2.45V10.2l-6 1.5V20a2.5 2.5 0 1 1-2-2.45V9l10-2.5V8z" fill="currentColor"/>
-    </svg>
+    <!-- JB Record Label Stamp -->
+    <div class="jb-logo">JB</div>
     Chicago Concerts 2026
   </a>
   <div class="nav-right">
@@ -278,10 +317,9 @@ footer {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
       <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
     </svg>
-    Discover More Music
+    Side B
   </div>
-  <h1 id="hero-title">If You Like...<br><em>Try This</em></h1>
-  <p class="hero-sub">"You know that point in your life when you realize the house you grew up in isn't really your home anymore?"</p>
+  <h1 id="hero-title"><em>Deeper</em><br>Cuts</h1>
 </section>
 
 <!-- MAIN CONTENT -->
@@ -296,22 +334,22 @@ footer {
       <p class="cluster-desc">The New Pornographers made you remember why group vocals matter</p>
     </div>
     <div class="recs-grid">
-      <div class="rec-card">
+      <a href="https://music.apple.com/us/search?term=Broken+Social+Scene+Anthems+for+a+Seventeen+Year-Old+Girl" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Broken Social Scene</div>
         <div class="rec-reason">"If you like The New Pornographers, try Broken Social Scene because they're basically the Canadian cousins with even more people on stage and somehow that chaos becomes beautiful orchestration."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Belle+and+Sebastian+The+Boy+with+the+Arab+Strap" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Belle and Sebastian</div>
         <div class="rec-reason">"If you like The New Pornographers' sweetness, try Belle and Sebastian because Stuart Murdoch writes the kind of songs that make you want to wear cardigans and believe in love again."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=The+Shins+New+Slang" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">The Shins</div>
         <div class="rec-reason">"If you like melodic indie pop, try The Shins because James Mercer crafts hooks that burrow into your brain and stay there for approximately seven years."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Of+Montreal+Wraith+Pinned+to+the+Mist" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Of Montreal</div>
         <div class="rec-reason">"If you like experimental pop arrangements, try Of Montreal because Kevin Barnes creates the kind of art-rock that makes you question reality while dancing involuntarily."</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -322,22 +360,22 @@ footer {
       <p class="cluster-desc">Iron & Wine proved you still have a heart under all that cynicism</p>
     </div>
     <div class="recs-grid">
-      <div class="rec-card">
+      <a href="https://music.apple.com/us/search?term=Fleet+Foxes+White+Winter+Hymnal" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Fleet Foxes</div>
         <div class="rec-reason">"If you like Iron & Wine's pastoral beauty, try Fleet Foxes because Robin Pecknold makes harmonies that sound like they were recorded in a cathedral made of trees."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Bon+Iver+Skinny+Love" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Bon Iver</div>
         <div class="rec-reason">"If you like whispered folk confessions, try Bon Iver because Justin Vernon turned heartbreak into falsetto and somehow made isolation sound comforting."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Phoebe+Bridgers+Motion+Sickness" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Phoebe Bridgers</div>
         <div class="rec-reason">"If you like gentle devastation, try Phoebe Bridgers because she writes the kind of songs that make you want to lie on the floor and think about every mistake you've ever made, but in a good way."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Father+John+Misty+Real+Love+Baby" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Father John Misty</div>
         <div class="rec-reason">"If you like literary folk with bite, try Father John Misty because Josh Tillman combines Sam Beam's tenderness with the existential dread of someone who reads too much Cormac McCarthy."</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -348,22 +386,22 @@ footer {
       <p class="cluster-desc">You're going to multiple Phish and Dave shows, you beautiful deadhead</p>
     </div>
     <div class="recs-grid">
-      <div class="rec-card">
+      <a href="https://music.apple.com/us/search?term=Widespread+Panic+Ain't+Life+Grand" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Widespread Panic</div>
         <div class="rec-reason">"If you like Dave Matthews Band's groove, try Widespread Panic because they're the southern rock answer to your jam band prayers, plus JB's guitar work will melt your face clean off."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Umphrey's+McGee+In+the+Kitchen" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Umphrey's McGee</div>
         <div class="rec-reason">"If you like Phish's technical prowess, try Umphrey's McGee because they took prog-rock ambition and gave it a jam band heart, which is like watching math become dancing."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=The+String+Cheese+Incident+Rollover" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">The String Cheese Incident</div>
         <div class="rec-reason">"If you like eclectic jams, try The String Cheese Incident because they throw bluegrass into a blender with electronica and somehow it doesn't sound like a mistake."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Trey+Anastasio+Money+Love+and+Change" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Trey Anastasio</div>
         <div class="rec-reason">"If you like Phish but want smaller crowds, try Trey Anastasio solo because it's basically Phish with 80% less wookies and 100% more intimate venues."</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -374,22 +412,22 @@ footer {
       <p class="cluster-desc">The Temper Trap reminded you that Australia counts as honorary Britain for indie purposes</p>
     </div>
     <div class="recs-grid">
-      <div class="rec-card">
+      <a href="https://music.apple.com/us/search?term=Foals+My+Number" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Foals</div>
         <div class="rec-reason">"If you like The Temper Trap's anthemic builds, try Foals because they make math-rock accessible without dumbing it down, like if Radiohead learned to dance."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Two+Door+Cinema+Club+What+You+Know" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Two Door Cinema Club</div>
         <div class="rec-reason">"If you like upbeat indie rock, try Two Door Cinema Club because they took post-punk revival and made it actually fun instead of just fashionably miserable."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Franz+Ferdinand+Take+Me+Out" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Franz Ferdinand</div>
         <div class="rec-reason">"If you like angular guitars, try Franz Ferdinand because they proved that art-rock could make people move their hips instead of just their heads."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Vampire+Weekend+A-Punk" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Vampire Weekend</div>
         <div class="rec-reason">"If you like clever indie pop, try Vampire Weekend because Ezra Koenig writes songs that sound like they're about nothing and everything at the same time, which is basically the indie rock sweet spot."</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -400,22 +438,22 @@ footer {
       <p class="cluster-desc">Band of Horses showed you that volume isn't everything</p>
     </div>
     <div class="recs-grid">
-      <div class="rec-card">
+      <a href="https://music.apple.com/us/search?term=My+Morning+Jacket+Wordless+Chorus" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">My Morning Jacket</div>
         <div class="rec-reason">"If you like Band of Horses' epic builds, try My Morning Jacket because Jim James has a voice that can whisper you to sleep or wake the dead, sometimes in the same song."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=The+War+on+Drugs+Red+Eyes" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">The War on Drugs</div>
         <div class="rec-reason">"If you like atmospheric rock, try The War on Drugs because Adam Granduciel makes heartland rock sound like it's being transmitted from space, in the best possible way."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Local+Natives+Airplanes" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Local Natives</div>
         <div class="rec-reason">"If you like harmony-driven indie rock, try Local Natives because they're what happens when five guys actually listen to each other instead of just waiting for their turn to solo."</div>
-      </div>
-      <div class="rec-card">
+      </a>
+      <a href="https://music.apple.com/us/search?term=Grizzly+Bear+Two+Weeks" target="_blank" rel="noopener noreferrer" class="rec-card">
         <div class="rec-artist">Grizzly Bear</div>
         <div class="rec-reason">"If you like complex arrangements that sneak up on you, try Grizzly Bear because they make chamber pop that sounds like it was arranged by someone who actually understands how feelings work."</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -445,6 +483,7 @@ footer {
 <footer>
   <p>Curated with ♪ for Joel's discovery year &middot; "The making of a great compilation tape, like breaking up, is hard to do" &middot; <a href="index.html" style="color: var(--color-teal);">Back to Shows</a></p>
   <p style="color: var(--color-text-faint); font-size: var(--text-xs); margin-top: var(--space-2);">for the cheat-code kids, something blue is hiding.</p>
+  <div id="secretsCounter" class="secrets-counter">Secrets found: 0 of 4</div>
 </footer>
 
 <script>
@@ -475,6 +514,7 @@ footer {
 function sayAnything() {
   const overlay = document.getElementById('blackOverlay');
   overlay.classList.add('show');
+  addSecret('boombox');
   setTimeout(() => overlay.classList.remove('show'), 3000);
 }
 
@@ -482,6 +522,7 @@ function sayAnything() {
 function openJoelModal() {
   const modal = document.getElementById('joelModal');
   modal.classList.add('show');
+  addSecret('name');
 }
 
 function closeJoelModal() {
@@ -498,6 +539,37 @@ document.addEventListener('keydown', (e) => {
 
 // High Fidelity Console Quote (unique to discover page)
 console.log('%c"And if you get cozy with some person in your arms, you don\'t really want to know what they\'re thinking about because it probably isn\'t you."', 'color: #e8880f; font-style: italic; font-size: 12px;');
+
+// Secrets Tracking System
+function getFoundSecrets() {
+  return JSON.parse(localStorage.getItem('joel_secrets_found') || '[]');
+}
+
+function addSecret(secretId) {
+  const found = getFoundSecrets();
+  if (!found.includes(secretId)) {
+    found.push(secretId);
+    localStorage.setItem('joel_secrets_found', JSON.stringify(found));
+    updateSecretsCounter();
+  }
+}
+
+function updateSecretsCounter() {
+  const found = getFoundSecrets();
+  const counter = document.getElementById('secretsCounter');
+  if (!counter) return;
+
+  if (found.length === 3) {
+    counter.textContent = 'Secrets found: 3 of 4. One left. On your keyboard: ↑ ↑ ↓ ↓ ← → ← → B A';
+  } else if (found.length === 4) {
+    counter.textContent = 'Secrets found: 4 of 4. You got them all.';
+  } else {
+    counter.textContent = `Secrets found: ${found.length} of 4`;
+  }
+}
+
+// Initialize counter on page load
+document.addEventListener('DOMContentLoaded', updateSecretsCounter);
 </script>
 </body>
 </html>

@@ -130,7 +130,22 @@ nav {
   font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
   color: var(--color-text); text-decoration: none;
 }
-.nav-logo svg { color: var(--color-primary); }
+.jb-logo {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  transition: transform var(--transition);
+  position: relative;
+}
+.jb-logo::before {
+  content: ''; position: absolute; inset: -1px;
+  border-radius: 50%; border: 1px solid var(--color-primary);
+  opacity: 0.3;
+}
+.nav-logo:hover .jb-logo { transform: rotate(5deg) scale(1.05); }
 .nav-right { display: flex; align-items: center; gap: var(--space-4); }
 .theme-toggle {
   width: 36px; height: 36px; border-radius: var(--radius-full);
@@ -305,6 +320,10 @@ footer {
   text-align: center;
   font-size: var(--text-xs);
   color: var(--color-text-faint);
+}
+.secrets-counter {
+  margin-top: var(--space-2); color: var(--color-text-faint);
+  font-size: var(--text-xs);
 }
 
 /* MONTH HEADER */
@@ -517,11 +536,8 @@ footer {
 <!-- NAV -->
 <nav aria-label="Site navigation">
   <a href="#" class="nav-logo" aria-label="Chicago Concert Guide 2026">
-    <!-- Music note SVG logo -->
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      <circle cx="14" cy="14" r="14" fill="currentColor" opacity="0.15"/>
-      <path d="M18 8v9.5a2.5 2.5 0 1 1-2-2.45V10.2l-6 1.5V20a2.5 2.5 0 1 1-2-2.45V9l10-2.5V8z" fill="currentColor"/>
-    </svg>
+    <!-- JB Record Label Stamp -->
+    <div class="jb-logo">JB</div>
     Chicago Concerts 2026
   </a>
   <div class="nav-right">
@@ -920,6 +936,7 @@ footer {
 <footer>
   <p>Made with ♪ for a Chicago concert lover &middot; Prices &amp; dates verified April 2026 &middot; Always confirm at the official venue before buying</p>
   <p style="color: var(--color-text-faint); font-size: var(--text-xs); margin-top: var(--space-2);">for the cheat-code kids, something blue is hiding.</p>
+  <div id="secretsCounter" class="secrets-counter">Secrets found: 0 of 4</div>
 </footer>
 
 <!-- YEAR TOOLTIP -->
@@ -985,10 +1002,42 @@ console.log('%c"I will now sell five copies of The Three EPs by The Beta Band."'
 console.log('%c"What came first? The music or the misery? People worry about kids playing with guns, or watching violent videos, that some sort of culture of violence will take them over. Nobody worries about kids listening to thousands, literally thousands of love songs. Did I listen to pop music because I was miserable? Or was I miserable because I listened to pop music?"', 'color: #3fa8af; font-style: italic;');
 console.log('%c"The making of a great compilation tape, like breaking up, is hard to do and takes ages longer than it might seem."', 'color: #e8880f; font-size: 12px;');
 
+// Secrets Tracking System
+function getFoundSecrets() {
+  return JSON.parse(localStorage.getItem('joel_secrets_found') || '[]');
+}
+
+function addSecret(secretId) {
+  const found = getFoundSecrets();
+  if (!found.includes(secretId)) {
+    found.push(secretId);
+    localStorage.setItem('joel_secrets_found', JSON.stringify(found));
+    updateSecretsCounter();
+  }
+}
+
+function updateSecretsCounter() {
+  const found = getFoundSecrets();
+  const counter = document.getElementById('secretsCounter');
+  if (!counter) return;
+
+  if (found.length === 3) {
+    counter.textContent = 'Secrets found: 3 of 4. One left. On your keyboard: ↑ ↑ ↓ ↓ ← → ← → B A';
+  } else if (found.length === 4) {
+    counter.textContent = 'Secrets found: 4 of 4. You got them all.';
+  } else {
+    counter.textContent = `Secrets found: ${found.length} of 4`;
+  }
+}
+
+// Initialize counter on page load
+document.addEventListener('DOMContentLoaded', updateSecretsCounter);
+
 // Joel Modal
 function openJoelModal() {
   const modal = document.getElementById('joelModal');
   modal.classList.add('show');
+  addSecret('name');
 }
 
 function closeJoelModal() {
@@ -1021,7 +1070,8 @@ document.addEventListener('keydown', e => {
   if (konamiCode.length > konami.length) konamiCode.shift();
   if (konamiCode.length === konami.length && konamiCode.every((k,i) => k === konami[i])) {
     document.documentElement.setAttribute('data-theme', 'blue');
-    showToast('blue mode. only joel unlocks this one.');
+    addSecret('konami');
+    showToast('Blue mode unlocked. Nice moves, Joel.');
     konamiCode = [];
   }
 });
@@ -1050,6 +1100,7 @@ document.getElementById('year-2026').addEventListener('click', () => {
   }
   if (year2026Clicks >= 5) {
     document.getElementById('top5Modal').classList.add('show');
+    addSecret('year');
     year2026Clicks = 0;
   }
 });
