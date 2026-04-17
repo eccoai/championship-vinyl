@@ -419,7 +419,7 @@ footer {
 .modal-overlay.show .modal { transform: scale(1); }
 
 .modal h2 {
-  font-size: var(--text-lg); margin-bottom: var(--space-6);
+  font-size: var(--text-lg); margin-bottom: var(--space-3);
   text-align: center; color: var(--color-text);
 }
 .modal-close {
@@ -430,22 +430,40 @@ footer {
 }
 .modal-close:hover { color: var(--color-text); }
 
-.draggable-list {
-  list-style: none; display: flex; flex-direction: column; gap: var(--space-2);
+.facts-modal {
+  border: 2px solid var(--color-primary);
+  max-height: 80vh; overflow-y: auto;
 }
-.draggable-item {
-  background: var(--color-surface-offset); border: 1px solid var(--color-border);
-  padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
-  cursor: grab; user-select: none;
-  transition: all var(--transition);
+.modal-subtitle {
+  font-style: italic; color: var(--color-text-faint);
+  text-align: center; margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
 }
-.draggable-item:hover { background: var(--color-surface-2); }
-.draggable-item.dragging { opacity: 0.5; cursor: grabbing; }
-.draggable-item::before {
-  content: counter(item) '. '; counter-increment: item;
-  color: var(--color-primary); font-weight: 600;
+.facts-grid {
+  display: grid; gap: var(--space-4);
+  grid-template-columns: 1fr;
 }
-.draggable-list { counter-reset: item; }
+@media (min-width: 640px) {
+  .facts-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.fact-card {
+  background: var(--color-surface-offset);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+.fact-band {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.fact-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
 
 /* BLACK OVERLAY (SAY ANYTHING EASTER EGG) */
 .black-overlay {
@@ -958,18 +976,38 @@ footer {
   <div class="overlay-text">in your eyes...</div>
 </div>
 
-<!-- TOP 5 MODAL -->
-<div id="top5Modal" class="modal-overlay" onclick="closeModal(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <h2>TOP FIVE SHOWS OF 2026, IN ORDER OF ANTICIPATION. ROB GORDON RULES APPLY.</h2>
-    <ol class="draggable-list" id="top5List">
-      <li class="draggable-item" draggable="true">The New Pornographers at Metro</li>
-      <li class="draggable-item" draggable="true">Iron & Wine at Thalia Hall</li>
-      <li class="draggable-item" draggable="true">Dave Matthews Band at Noblesville</li>
-      <li class="draggable-item" draggable="true">Phish 3-night run at Noblesville</li>
-      <li class="draggable-item" draggable="true">Band of Horses at Genesee Theatre</li>
-    </ol>
+<!-- RARE FACTS MODAL -->
+<div id="rareFactsModal" class="modal-overlay" onclick="closeFactsModal(event)">
+  <div class="modal facts-modal">
+    <button class="modal-close" onclick="closeFactsModal()">&times;</button>
+    <h2 style="color: var(--color-primary);">Rare Facts for a Concert Year</h2>
+    <p class="modal-subtitle">The kind of thing Rob Gordon would mention, unprompted, just to show he knew.</p>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <h3 class="fact-band">The New Pornographers</h3>
+        <p class="fact-text">Dan Bejar, the band's most eccentric member and the frontman of his own project Destroyer, moved to Spain two months after their debut came out. A.C. Newman assumed he was done with the band. Twenty-one years later Bejar still drifts in and out, skipping entire albums and tours when his solo work gets in the way. This tour is his first with them in seven years.</p>
+      </div>
+      <div class="fact-card">
+        <h3 class="fact-band">Iron & Wine</h3>
+        <p class="fact-text">Before music, Sam Beam was a film professor in South Florida. He picked the name "Iron & Wine" off a nutritional supplement bottle he spotted on a film shoot. His cover of "Such Great Heights," the song that made him famous, was originally recorded as a favor to The Postal Service and released as a B-side on their single. Garden State put it on the map a year later.</p>
+      </div>
+      <div class="fact-card">
+        <h3 class="fact-band">Dave Matthews Band</h3>
+        <p class="fact-text">Dave Matthews is South African. He was born in Johannesburg, moved to the US as a teenager, and was bartending at a place called Miller's in Charlottesville when he started writing songs. He recruited his bandmates from the Charlottesville jazz scene, which is why DMB has a saxophonist and a violinist instead of a lead guitarist.</p>
+      </div>
+      <div class="fact-card">
+        <h3 class="fact-band">Phish</h3>
+        <p class="fact-text">Trey Anastasio got kicked out of the University of Vermont and transferred to Goddard College. His senior thesis was called "The Man Who Stepped Into Yesterday," a fictional narrative about a place called Gamehendge. That thesis became the entire mythology Phish has built on for forty years. Every character in the Phish universe came out of a college assignment.</p>
+      </div>
+      <div class="fact-card">
+        <h3 class="fact-band">The Temper Trap</h3>
+        <p class="fact-text">Lead singer Dougy Mandagi is Indonesian-born. He moved to Melbourne as a teenager and started the band there. "Sweet Disposition" came out in 2008, a year before (500) Days of Summer turned it into a phenomenon. That one song has outlived almost everything else the band has done, which is both a gift and a curse they talk about openly.</p>
+      </div>
+      <div class="fact-card">
+        <h3 class="fact-band">Band of Horses</h3>
+        <p class="fact-text">Ben Bridwell, the frontman, did not know how to play an instrument when his previous band Carissa's Wierd broke up. He had been their drummer, and only because Mat Brooke gave him basic lessons first. After Carissa's Wierd ended, Brooke taught Bridwell guitar from scratch. Four years later they released "The Funeral," one of the most licensed indie songs of the 2000s.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1049,7 +1087,7 @@ function closeJoelModal() {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeJoelModal();
-    closeModal();
+    closeFactsModal();
   }
 });
 
@@ -1089,7 +1127,7 @@ function showToast(message) {
   }, 3000);
 }
 
-// Top 5 Shows Modal
+// Rare Facts Modal
 let year2026Clicks = 0;
 document.getElementById('year-2026').addEventListener('click', () => {
   year2026Clicks++;
@@ -1099,72 +1137,15 @@ document.getElementById('year-2026').addEventListener('click', () => {
     localStorage.setItem('year2026Clicked', 'true');
   }
   if (year2026Clicks >= 5) {
-    document.getElementById('top5Modal').classList.add('show');
+    document.getElementById('rareFactsModal').classList.add('show');
     addSecret('year');
     year2026Clicks = 0;
   }
 });
 
-function closeModal(event) {
+function closeFactsModal(event) {
   if (!event || event.target.classList.contains('modal-overlay') || event.target.classList.contains('modal-close')) {
-    document.getElementById('top5Modal').classList.remove('show');
-    saveTop5Order();
-  }
-}
-
-// Drag and Drop for Top 5 List
-let draggedItem = null;
-document.addEventListener('DOMContentLoaded', () => {
-  const list = document.getElementById('top5List');
-  loadTop5Order();
-
-  list.addEventListener('dragstart', e => {
-    draggedItem = e.target;
-    e.target.classList.add('dragging');
-  });
-
-  list.addEventListener('dragend', e => {
-    e.target.classList.remove('dragging');
-    draggedItem = null;
-  });
-
-  list.addEventListener('dragover', e => {
-    e.preventDefault();
-    const afterElement = getDragAfterElement(list, e.clientY);
-    if (afterElement == null) {
-      list.appendChild(draggedItem);
-    } else {
-      list.insertBefore(draggedItem, afterElement);
-    }
-  });
-});
-
-function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
-  return draggableElements.reduce((closest, child) => {
-    const box = child.getBoundingClientRect();
-    const offset = y - box.top - box.height / 2;
-    if (offset < 0 && offset > closest.offset) {
-      return { offset: offset, element: child };
-    } else {
-      return closest;
-    }
-  }, { offset: Number.NEGATIVE_INFINITY }).element;
-}
-
-function saveTop5Order() {
-  const items = [...document.querySelectorAll('#top5List .draggable-item')].map(item => item.textContent);
-  localStorage.setItem('top5Shows2026', JSON.stringify(items));
-}
-
-function loadTop5Order() {
-  const saved = localStorage.getItem('top5Shows2026');
-  if (saved) {
-    const items = JSON.parse(saved);
-    const list = document.getElementById('top5List');
-    list.innerHTML = items.map(item =>
-      `<li class="draggable-item" draggable="true">${item}</li>`
-    ).join('');
+    document.getElementById('rareFactsModal').classList.remove('show');
   }
 }
 
