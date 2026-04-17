@@ -5,8 +5,8 @@ A curated concert guide featuring your favorite artists coming to Chicago in 202
 ## Features
 
 ✨ **Interactive Concert Cards**
-- Add-to-calendar buttons that generate .ics files
-- Collapsible Apple Music artist embeds
+- Add-to-calendar buttons that open Google Calendar
+- Direct Apple Music search links
 - Responsive design with dark/light theme toggle
 
 🎵 **Discover Page**
@@ -17,8 +17,8 @@ A curated concert guide featuring your favorite artists coming to Chicago in 202
 🥚 **Easter Eggs**
 - Konami code unlocks secret blue theme
 - High Fidelity quotes logged to console on page load
-- Top 5 shows modal (click "2026" five times) with drag-and-drop ranking
-- ASCII boombox (Say Anything reference) on discover page
+- Top 5 shows modal (click "2026" five times) with drag and drop ranking
+- Play button (Say Anything reference) on discover page
 
 📱 **GitHub Pages Ready**
 - No build step required
@@ -56,8 +56,8 @@ git push origin main
 
 ## Design System
 
-**Typography:** Playfair Display (headings) + DM Sans (body)  
-**Colors:** Warm amber primary (#e8880f) + teal accent (#3fa8af)  
+**Typography:** Playfair Display (headings) plus DM Sans (body)  
+**Colors:** Warm amber primary (#e8880f) plus teal accent (#3fa8af)  
 **Theme:** Dark/light toggle with system preference detection  
 **Feel:** Editorial zine meets concert database
 

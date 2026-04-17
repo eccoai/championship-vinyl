@@ -7,13 +7,13 @@
 
 <!-- Open Graph / Social Media -->
 <meta property="og:title" content="Chicago Concerts 2026 for Joel">
-<meta property="og:description" content="Your perfect concert year in Chicago — curated shows from your favorite artists with insider tips and road trip recommendations.">
+<meta property="og:description" content="Your perfect concert year in Chicago. Curated shows from your favorite artists with insider tips and road trip recommendations.">
 <meta property="og:image" content="https://placeholder.com/og-image.jpg">
 <meta property="og:url" content="https://yourusername.github.io/championship-vinyl/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chicago Concerts 2026 for Joel">
-<meta name="twitter:description" content="Your perfect concert year in Chicago — curated shows from your favorite artists.">
+<meta name="twitter:description" content="Your perfect concert year in Chicago. Curated shows from your favorite artists.">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M22 10v11.5a3.5 3.5 0 1 1-2.8-3.43V13.28l-8 2V26a3.5 3.5 0 1 1-2.8-3.43V12l13.6-3.4V10z' fill='%23e8880f'/%3E%3C/svg%3E">
@@ -350,24 +350,13 @@ footer {
 .btn-calendar:hover { background: var(--color-teal); color: var(--color-text-inverse); }
 
 .music-toggle {
+  display: inline-flex; align-items: center; gap: var(--space-1);
   background: none; border: none; color: var(--color-text-muted);
   font-size: var(--text-xs); padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm); cursor: pointer;
+  border-radius: var(--radius-sm); text-decoration: none;
   transition: color var(--transition);
 }
 .music-toggle:hover { color: var(--color-primary); }
-.music-toggle.active { color: var(--color-primary); }
-
-.music-embed {
-  margin-top: var(--space-3); overflow: hidden;
-  border-radius: var(--radius-md); border: 1px solid oklch(from var(--color-text) l c h / 0.08);
-  height: 0; opacity: 0; transform: translateY(-10px);
-  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.music-embed.open {
-  height: 152px; opacity: 1; transform: translateY(0);
-}
-.music-embed iframe { width: 100%; height: 150px; border: none; }
 
 /* BLUE THEME (KONAMI) */
 [data-theme="blue"] {
@@ -457,12 +446,63 @@ footer {
 }
 
 .ascii-boombox {
-  position: fixed; bottom: var(--space-4); left: var(--space-4);
-  font-family: monospace; font-size: 10px; line-height: 1;
-  color: var(--color-text-faint); cursor: pointer;
+  position: fixed; bottom: var(--space-4); right: var(--space-4);
+  font-size: 48px; cursor: pointer; z-index: 100;
+  color: var(--color-text-faint);
   transition: color var(--transition);
+  animation: pulse 2s ease-in-out infinite;
 }
 .ascii-boombox:hover { color: var(--color-primary); }
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.tooltip {
+  position: relative;
+}
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm);
+  font-size: var(--text-xs); color: var(--color-text);
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity var(--transition);
+  margin-bottom: var(--space-2);
+}
+.tooltip:hover::after { opacity: 1; }
+
+.year-tooltip {
+  position: fixed; bottom: var(--space-16); right: var(--space-4); z-index: 200;
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md); font-size: var(--text-sm);
+  color: var(--color-text-faint); opacity: 0; pointer-events: none;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+}
+.year-tooltip.show { opacity: 1; transform: translateY(0); }
+
+.joel-modal {
+  position: fixed; inset: 0; z-index: 2000;
+  background: oklch(0 0 0 / 0.8); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.joel-modal.show { opacity: 1; pointer-events: all; }
+.joel-modal-content {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl); padding: var(--space-8);
+  max-width: 500px; width: 90%; box-shadow: var(--shadow-lg);
+  transform: scale(0.9); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+.joel-modal.show .joel-modal-content { transform: scale(1); }
+.joel-modal h2 { font-size: var(--text-xl); margin-bottom: var(--space-4); color: var(--color-text); }
+.joel-modal p { color: var(--color-text-muted); line-height: 1.6; }
 
 /* PRINT */
 @media print {
@@ -486,7 +526,7 @@ footer {
   </a>
   <div class="nav-right">
     <a href="discover.html" style="color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); transition: color var(--transition);" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--color-text-muted)'">Discover</a>
-    <span class="nav-note">Joel Brock ♪</span>
+    <span class="nav-note clickable-joel" onclick="openJoelModal()" style="cursor: pointer;">♪</span>
     <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
@@ -510,7 +550,7 @@ footer {
       Chicago, Illinois · <span id="year-2026" style="cursor: pointer;">2026</span>
     </div>
     <h1 id="hero-title">Your <em>Perfect</em><br>Concert Year</h1>
-    <p class="hero-sub">We tracked down every show from your favorites coming to the Chicago area — and a few epic road trips worth taking.</p>
+<p class="hero-sub">We tracked down every show from your favorites coming to the Chicago area, plus a few epic road trips worth taking.</p>
   </div>
 </section>
 
@@ -523,7 +563,7 @@ footer {
   <div class="legend" aria-label="Badge legend">
     <div class="legend-item"><span class="card-badge badge-confirmed">In Chicago</span> Playing in the city or immediate suburbs</div>
     <div class="legend-item"><span class="card-badge badge-nearby">Chicago-area</span> Within ~40 mi (Tinley Park, Waukegan, etc.)</div>
-    <div class="legend-item"><span class="card-badge badge-road-trip">Road trip</span> Worth a drive — 2-3 hrs from Chicago</div>
+    <div class="legend-item"><span class="card-badge badge-road-trip">Road trip</span> Worth a drive (2-3 hrs from Chicago)</div>
     <div class="legend-item"><span class="card-badge badge-tba">TBA / No shows</span> Nothing announced for the area yet</div>
   </div>
 
@@ -560,7 +600,7 @@ footer {
           </div>
           <div class="detail-row">
             <svg class="detail-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            <div><div class="detail-label">Capacity</div><div class="detail-value muted">Intimate — Metro holds ~1,100</div></div>
+            <div><div class="detail-label">Capacity</div><div class="detail-value muted">Intimate venue, Metro holds ~1,100</div></div>
           </div>
         </div>
         <div class="card-footer">
@@ -569,19 +609,16 @@ footer {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
               Get Tickets
             </a>
-            <button class="btn-calendar" onclick="addToCalendar('The New Pornographers', '2026-05-03T19:30:00', 'Metro Chicago, 3730 N Clark St, Chicago, IL', 'https://www.metrochicago.com')">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The%20New%20Pornographers%20Concert&dates=20260504T003000Z/20260504T033000Z&details=The%20New%20Pornographers%20live%20in%20concert!%0A%0AVenue:%20Metro%20Chicago,%203730%20N%20Clark%20St,%20Chicago,%20IL%0ATickets:%20https://www.metrochicago.com&location=Metro%20Chicago,%203730%20N%20Clark%20St,%20Chicago,%20IL" target="_blank" rel="noopener noreferrer" class="btn-calendar">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
               Add to Calendar
-            </button>
-            <button class="music-toggle" onclick="toggleMusic(this, '269664')">
+            </a>
+            <a href="https://music.apple.com/us/search?term=The%20New%20Pornographers" target="_blank" rel="noopener noreferrer" class="music-toggle">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
               Listen
-            </button>
+            </a>
           </div>
           <span class="price-hint">From ~$73</span>
-          <div class="music-embed">
-            <iframe src="https://embed.music.apple.com/us/artist/the-new-pornographers/269664?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-          </div>
         </div>
       </div>
     </article>
@@ -613,19 +650,16 @@ footer {
       <div class="card-footer">
         <div class="card-actions">
           <a href="https://www.axs.com/events/1263631/iron-and-wine-tickets" target="_blank" rel="noopener noreferrer" class="btn-tickets">Get Tickets</a>
-          <button class="btn-calendar" onclick="addToCalendar('Iron & Wine', '2026-05-06T20:00:00', 'Thalia Hall, 1807 S Allport St, Chicago, IL', 'https://www.axs.com/events/1263631/iron-and-wine-tickets')">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Iron%20%26%20Wine%20Concert&dates=20260507T010000Z/20260507T040000Z&details=Iron%20%26%20Wine%20live%20in%20concert!%0A%0AVenue:%20Thalia%20Hall,%201807%20S%20Allport%20St,%20Chicago,%20IL%0ATickets:%20https://www.axs.com/events/1263631/iron-and-wine-tickets&location=Thalia%20Hall,%201807%20S%20Allport%20St,%20Chicago,%20IL" target="_blank" rel="noopener noreferrer" class="btn-calendar">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Add to Calendar
-          </button>
-          <button class="music-toggle" onclick="toggleMusic(this, '4488852')">
+          </a>
+          <a href="https://music.apple.com/us/search?term=Iron%20and%20Wine" target="_blank" rel="noopener noreferrer" class="music-toggle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             Listen
-          </button>
+          </a>
         </div>
         <span class="price-hint">On sale now</span>
-        <div class="music-embed">
-          <iframe src="https://embed.music.apple.com/us/artist/iron-wine/4488852?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-        </div>
       </div>
     </article>
 
@@ -655,7 +689,7 @@ footer {
         </div>
         <div class="detail-row">
           <svg class="detail-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-          <div><div class="detail-label">Drive from Chicago</div><div class="detail-value muted">~3 hrs · classic outdoor amphitheater vibes</div></div>
+          <div><div class="detail-label">Drive from Chicago</div><div class="detail-value muted">~3 hrs to classic outdoor amphitheater</div></div>
         </div>
         <div class="detail-row">
           <svg class="detail-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
@@ -665,19 +699,16 @@ footer {
       <div class="card-footer">
         <div class="card-actions">
           <a href="https://www.ticketmaster.com/dave-matthews-band-noblesville-indiana-06-27-2026/event/050064330459BB3A" target="_blank" rel="noopener noreferrer" class="btn-tickets">Get Tickets</a>
-          <button class="btn-calendar" onclick="addToCalendar('Dave Matthews Band', '2026-06-26T19:00:00', 'Ruoff Music Center, 12880 E 146th St, Noblesville, IN', 'https://www.ticketmaster.com/dave-matthews-band-noblesville-indiana-06-27-2026/event/050064330459BB3A')">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dave%20Matthews%20Band%20Concert&dates=20260627T000000Z/20260627T030000Z&details=Dave%20Matthews%20Band%20live%20in%20concert!%0A%0AVenue:%20Ruoff%20Music%20Center,%2012880%20E%20146th%20St,%20Noblesville,%20IN%0ATickets:%20https://www.ticketmaster.com/dave-matthews-band-noblesville-indiana-06-27-2026/event/050064330459BB3A&location=Ruoff%20Music%20Center,%2012880%20E%20146th%20St,%20Noblesville,%20IN" target="_blank" rel="noopener noreferrer" class="btn-calendar">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Add to Calendar
-          </button>
-          <button class="music-toggle" onclick="toggleMusic(this, '311979')">
+          </a>
+          <a href="https://music.apple.com/us/search?term=Dave%20Matthews%20Band" target="_blank" rel="noopener noreferrer" class="music-toggle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             Listen
-          </button>
+          </a>
         </div>
         <span class="price-hint">2-night passes available</span>
-        <div class="music-embed">
-          <iframe src="https://embed.music.apple.com/us/artist/dave-matthews-band/311979?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-        </div>
       </div>
     </article>
 
@@ -708,19 +739,16 @@ footer {
       <div class="card-footer">
         <div class="card-actions">
           <a href="https://phish.com/tours" target="_blank" rel="noopener noreferrer" class="btn-tickets">Get Tickets</a>
-          <button class="btn-calendar" onclick="addToCalendar('Phish', '2026-07-10T19:00:00', 'Ruoff Music Center, 12880 E 146th St, Noblesville, IN', 'https://phish.com/tours')">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Phish%20Concert&dates=20260711T000000Z/20260711T030000Z&details=Phish%20live%20in%20concert!%0A%0AVenue:%20Ruoff%20Music%20Center,%2012880%20E%20146th%20St,%20Noblesville,%20IN%0ATickets:%20https://phish.com/tours&location=Ruoff%20Music%20Center,%2012880%20E%20146th%20St,%20Noblesville,%20IN" target="_blank" rel="noopener noreferrer" class="btn-calendar">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Add to Calendar
-          </button>
-          <button class="music-toggle" onclick="toggleMusic(this, '137085')">
+          </a>
+          <a href="https://music.apple.com/us/search?term=Phish" target="_blank" rel="noopener noreferrer" class="music-toggle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             Listen
-          </button>
+          </a>
         </div>
         <span class="price-hint">From ~$79</span>
-        <div class="music-embed">
-          <iframe src="https://embed.music.apple.com/us/artist/phish/137085?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-        </div>
       </div>
     </article>
 
@@ -751,19 +779,16 @@ footer {
       <div class="card-footer">
         <div class="card-actions">
           <a href="https://seatgeek.com/the-temper-trap-tickets/chicago" target="_blank" rel="noopener noreferrer" class="btn-tickets">Get Tickets</a>
-          <button class="btn-calendar" onclick="addToCalendar('The Temper Trap with Muse & Bloc Party', '2026-07-10T19:00:00', 'Credit Union 1 Amphitheatre, 19100 Ridgeland Ave, Tinley Park, IL', 'https://seatgeek.com/the-temper-trap-tickets/chicago')">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The%20Temper%20Trap%20with%20Muse%20%26%20Bloc%20Party&dates=20260711T000000Z/20260711T030000Z&details=The%20Temper%20Trap%20with%20Muse%20%26%20Bloc%20Party%20live%20in%20concert!%0A%0AVenue:%20Credit%20Union%201%20Amphitheatre,%2019100%20Ridgeland%20Ave,%20Tinley%20Park,%20IL%0ATickets:%20https://seatgeek.com/the-temper-trap-tickets/chicago&location=Credit%20Union%201%20Amphitheatre,%2019100%20Ridgeland%20Ave,%20Tinley%20Park,%20IL" target="_blank" rel="noopener noreferrer" class="btn-calendar">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Add to Calendar
-          </button>
-          <button class="music-toggle" onclick="toggleMusic(this, '289375796')">
+          </a>
+          <a href="https://music.apple.com/us/search?term=The%20Temper%20Trap" target="_blank" rel="noopener noreferrer" class="music-toggle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             Listen
-          </button>
+          </a>
         </div>
         <span class="price-hint">From ~$70</span>
-        <div class="music-embed">
-          <iframe src="https://embed.music.apple.com/us/artist/the-temper-trap/289375796?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-        </div>
       </div>
     </article>
 
@@ -794,19 +819,16 @@ footer {
       <div class="card-footer">
         <div class="card-actions">
           <a href="https://www.ticketmaster.com/an-evening-with-band-of-horses-waukegan-illinois-08-09-2026/event/0700646BDA899022" target="_blank" rel="noopener noreferrer" class="btn-tickets">Get Tickets</a>
-          <button class="btn-calendar" onclick="addToCalendar('Band of Horses', '2026-08-09T19:00:00', 'Genesee Theatre, 203 N Genesee St, Waukegan, IL', 'https://www.ticketmaster.com/an-evening-with-band-of-horses-waukegan-illinois-08-09-2026/event/0700646BDA899022')">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Band%20of%20Horses%20Concert&dates=20260810T000000Z/20260810T030000Z&details=Band%20of%20Horses%20live%20in%20concert!%0A%0AVenue:%20Genesee%20Theatre,%20203%20N%20Genesee%20St,%20Waukegan,%20IL%0ATickets:%20https://www.ticketmaster.com/an-evening-with-band-of-horses-waukegan-illinois-08-09-2026/event/0700646BDA899022&location=Genesee%20Theatre,%20203%20N%20Genesee%20St,%20Waukegan,%20IL" target="_blank" rel="noopener noreferrer" class="btn-calendar">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Add to Calendar
-          </button>
-          <button class="music-toggle" onclick="toggleMusic(this, '172077')">
+          </a>
+          <a href="https://music.apple.com/us/search?term=Band%20of%20Horses" target="_blank" rel="noopener noreferrer" class="music-toggle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             Listen
-          </button>
+          </a>
         </div>
         <span class="price-hint">On sale now</span>
-        <div class="music-embed">
-          <iframe src="https://embed.music.apple.com/us/artist/band-of-horses/172077?app=music&amp;itsct=music_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" frameborder="0"></iframe>
-        </div>
       </div>
     </article>
 
@@ -816,12 +838,12 @@ footer {
   <div class="tip-box fade-in">
     <h3>🎸 Bonus: Keep Your Eyes On...</h3>
     <ul>
-      <li><strong>Lizzy McAlpine</strong> — No Chicago tour dates announced yet, but she's playing Newport Folk Fest (July 2026) and the Hollywood Bowl (July 17). Her next album cycle could bring a proper tour in late 2026 or 2027. Follow her at <a href="https://www.lizzymcalpine.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">lizzymcalpine.com</a>.</li>
-      <li><strong>The National</strong> — Matt Berninger (frontman) just wrapped a solo North American tour in Spring 2026. No full-band Chicago dates currently listed. Check back — The National regularly plays Chicago.</li>
-      <li><strong>Sufjan Stevens</strong> — No upcoming shows currently listed anywhere. He rarely tours but when he does it's unmissable. Set an alert!</li>
-      <li><strong>Frou Frou (Imogen Heap)</strong> — The duo has been inactive since 2003 with no reunion tour announced. Imogen Heap does occasionally play solo.</li>
-      <li><strong>Led Zeppelin (tribute)</strong> — "Led Zeppelin 2" played House of Blues Chicago in January 2026. "Kashmir" (tribute) plays nearby venues — check local listings.</li>
-      <li><strong>Lighthouse Family</strong> — A UK act that rarely tours North America. No 2026 US dates known.</li>
+      <li><strong>Lizzy McAlpine</strong>: No Chicago tour dates announced yet, but she's playing Newport Folk Fest (July 2026) and the Hollywood Bowl (July 17). Her next album cycle could bring a proper tour in late 2026 or 2027. Follow her at <a href="https://www.lizzymcalpine.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">lizzymcalpine.com</a>.</li>
+      <li><strong>The National</strong>: Matt Berninger (frontman) just wrapped a solo North American tour in Spring 2026. No full-band Chicago dates currently listed. Check back, The National regularly plays Chicago.</li>
+      <li><strong>Sufjan Stevens</strong>: No upcoming shows currently listed anywhere. He rarely tours but when he does it's unmissable. Set an alert!</li>
+      <li><strong>Frou Frou (Imogen Heap)</strong>: The duo has been inactive since 2003 with no reunion tour announced. Imogen Heap does occasionally play solo.</li>
+      <li><strong>Led Zeppelin (tribute)</strong>: "Led Zeppelin 2" played House of Blues Chicago in January 2026. "Kashmir" (tribute) plays nearby venues. Check local listings.</li>
+      <li><strong>Lighthouse Family</strong>: A UK act that rarely tours North America. No 2026 US dates known.</li>
     </ul>
   </div>
 
@@ -888,7 +910,7 @@ footer {
   </div>
 
   <div style="margin-top:var(--space-8); padding:var(--space-5) var(--space-6); background:var(--color-surface); border-radius:var(--radius-xl); border:1px solid oklch(from var(--color-text) l c h / 0.07); font-size:var(--text-sm); color:var(--color-text-muted);">
-    <strong style="color:var(--color-text);">📅 Pro tip:</strong> Set alerts on <a href="https://www.bandsintown.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">Bandsintown</a> or <a href="https://www.songkick.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">Songkick</a> for your favorites. Lizzy McAlpine, The National, and Sufjan Stevens could announce Chicago dates any time — you'll want to be first in line.
+    <strong style="color:var(--color-text);">📅 Pro tip:</strong> Set alerts on <a href="https://www.bandsintown.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">Bandsintown</a> or <a href="https://www.songkick.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-teal)">Songkick</a> for your favorites. Lizzy McAlpine, The National and Sufjan Stevens could announce Chicago dates any time. You'll want to be first in line.
   </div>
 
 </div><!-- /container -->
@@ -897,11 +919,21 @@ footer {
 
 <footer>
   <p>Made with ♪ for a Chicago concert lover &middot; Prices &amp; dates verified April 2026 &middot; Always confirm at the official venue before buying</p>
+  <p style="color: var(--color-text-faint); font-size: var(--text-xs); margin-top: var(--space-2);">for the cheat-code kids, something blue is hiding.</p>
 </footer>
 
-<!-- ASCII BOOMBOX (SAY ANYTHING EASTER EGG) -->
-<div class="ascii-boombox" onclick="sayAnything()">
-♪ ♫ ♪
+<!-- YEAR TOOLTIP -->
+<div id="yearTooltip" class="year-tooltip">
+  try clicking the year.
+</div>
+
+<!-- JOEL MODAL -->
+<div id="joelModal" class="joel-modal" onclick="closeJoelModal()">
+  <div class="joel-modal-content" onclick="event.stopPropagation()">
+    <h2>For Joel Brock</h2>
+    <p>Your year of shows, curated with love. P.S. there are three more secrets hiding on this site. The boombox on Discover is one. The year 2026 is another. The third takes a cheat code.</p>
+    <button onclick="closeJoelModal()" style="margin-top: var(--space-4); padding: var(--space-2) var(--space-4); background: var(--color-primary); color: var(--color-text-inverse); border: none; border-radius: var(--radius-sm); cursor: pointer;">Close</button>
+  </div>
 </div>
 
 <!-- BLACK OVERLAY -->
@@ -953,59 +985,33 @@ console.log('%c"I will now sell five copies of The Three EPs by The Beta Band."'
 console.log('%c"What came first? The music or the misery? People worry about kids playing with guns, or watching violent videos, that some sort of culture of violence will take them over. Nobody worries about kids listening to thousands, literally thousands of love songs. Did I listen to pop music because I was miserable? Or was I miserable because I listened to pop music?"', 'color: #3fa8af; font-style: italic;');
 console.log('%c"The making of a great compilation tape, like breaking up, is hard to do and takes ages longer than it might seem."', 'color: #e8880f; font-size: 12px;');
 
-// Calendar Functions
-function addToCalendar(artist, datetime, venue, ticketUrl) {
-  const event = {
-    title: artist + ' Concert',
-    start: new Date(datetime),
-    end: new Date(new Date(datetime).getTime() + 3 * 60 * 60 * 1000), // 3 hours later
-    location: venue,
-    description: `${artist} live in concert!\\n\\nVenue: ${venue}\\nTickets: ${ticketUrl}`
-  };
-
-  const icsContent = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Chicago Concert Guide//2026//EN',
-    'BEGIN:VEVENT',
-    'UID:' + Math.random().toString(36).substr(2, 9) + '@chicago-concerts-2026',
-    'DTSTAMP:' + formatDate(new Date()),
-    'DTSTART:' + formatDate(event.start),
-    'DTEND:' + formatDate(event.end),
-    'SUMMARY:' + event.title,
-    'LOCATION:' + event.location,
-    'DESCRIPTION:' + event.description,
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\\r\\n');
-
-  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = artist.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_concert.ics';
-  link.click();
-  URL.revokeObjectURL(url);
+// Joel Modal
+function openJoelModal() {
+  const modal = document.getElementById('joelModal');
+  modal.classList.add('show');
 }
 
-function formatDate(date) {
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+function closeJoelModal() {
+  const modal = document.getElementById('joelModal');
+  modal.classList.remove('show');
 }
 
-// Apple Music Toggle
-function toggleMusic(button, artistId) {
-  const embed = button.closest('.card-footer').querySelector('.music-embed');
-  const isOpen = embed.classList.contains('open');
-
-  // Close all other embeds first
-  document.querySelectorAll('.music-embed.open').forEach(e => e.classList.remove('open'));
-  document.querySelectorAll('.music-toggle.active').forEach(b => b.classList.remove('active'));
-
-  if (!isOpen) {
-    embed.classList.add('open');
-    button.classList.add('active');
+// Escape key support
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeJoelModal();
+    closeModal();
   }
-}
+});
+
+// Year tooltip
+setTimeout(() => {
+  const tooltip = document.getElementById('yearTooltip');
+  if (tooltip && !localStorage.getItem('year2026Clicked')) {
+    tooltip.classList.add('show');
+    setTimeout(() => tooltip.classList.remove('show'), 8000);
+  }
+}, 5000);
 
 // Konami Code (↑↑↓↓←→←→BA)
 let konamiCode = [];
@@ -1037,6 +1043,11 @@ function showToast(message) {
 let year2026Clicks = 0;
 document.getElementById('year-2026').addEventListener('click', () => {
   year2026Clicks++;
+  const tooltip = document.getElementById('yearTooltip');
+  if (tooltip) {
+    tooltip.classList.remove('show');
+    localStorage.setItem('year2026Clicked', 'true');
+  }
   if (year2026Clicks >= 5) {
     document.getElementById('top5Modal').classList.add('show');
     year2026Clicks = 0;
